@@ -1,0 +1,19 @@
+CREATE TABLE users (
+        Users_Id        INTEGER NOT NULL PRIMARY KEY,
+        First_name      TEXT NOT NULL,
+        Last_name       TEXT NOT NULL
+);
+CREATE TABLE categories (
+        Categories_Id   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        Categories      TEXT NOT NULL,
+        User_Id_Categories      INTEGER REFERENCES Users(User_ID)
+);
+CREATE TABLE keywords (
+        Keywords_Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        Keywords        TEXT NOT NULL,
+        User_Id_Keywords        INTEGER REFERENCES User_Id(News_ID)
+);
+
+INSERT INTO tableins (Users_Id, First_name, Last_name)
+VALUES (59845086, 'Никита', 'Остапенко');
+
