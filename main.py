@@ -17,11 +17,15 @@ while True:
         messages = vk.method("messages.getConversations", {"offset": 0, "count": 20, "filter": "unanswered"})
         if messages["count"] >= 1:
             id = messages["items"][0]["last_message"]["from_id"]
+            name = vk.method("users.get", {"user_ids": id})
+            username = name[0]['first_name']
             body = messages["items"][0]["last_message"]["text"]
             newss = news.search_publication_in_request(body.lower(), 'ru', '1', '1')
-            vk.method("messages.send", {"peer_id": id, "message": f'Главная новость: {newss}', "random_id": random.randint(1, 2147483647)})
-            # if body.lower() == "привет":
-            #     vk.method("messages.send", {"peer_id": id, "message": "Привет!", "random_id": random.randint(1, 2147483647)})
+            if body.lower() == "привет":
+                vk.method("messages.send", {"peer_id": id, "message": f'Привет {username}', "random_id": random.randint(1, 2147483647)})
+            else:
+                vk.method("messages.send", {"peer_id": id, "message": f'Главная новость: {newss}', "random_id": random.randint(1, 2147483647)})
+            print(name[0]['first_name'])
             # elif body.lower() == "Пока":
             #     vk.method("messages.send", {"peer_id": id, "message": "Доброго дня!", "random_id": random.randint(1, 2147483647)})
             # else:
