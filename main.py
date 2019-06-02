@@ -1,4 +1,4 @@
-api_key = 'f5911bd162fee3301832f928246ef3c3b9534352d2f1f7da48f68212d9019f8c0c7da5d7cc123ada372ba'
+api_key = 'apikey'
 
 
 import vk_api
@@ -17,15 +17,20 @@ while True:
         messages = vk.method("messages.getConversations", {"offset": 0, "count": 20, "filter": "unanswered"})
         if messages["count"] >= 1:
             id = messages["items"][0]["last_message"]["from_id"]
+            #get_user_id_in_bd = 
+            # '''
+            # SELECT users
+            # where Users_ID = 
+            # '''
             name = vk.method("users.get", {"user_ids": id})
-            username = name[0]['first_name']
+            first_name = name[0]['first_name']
+            last_name = name[0]['last_name']
             body = messages["items"][0]["last_message"]["text"]
             newss = news.search_publication_in_request(body.lower(), 'ru', '1', '1')
             if body.lower() == "привет":
-                vk.method("messages.send", {"peer_id": id, "message": f'Привет {username}', "random_id": random.randint(1, 2147483647)})
+                vk.method("messages.send", {"peer_id": id, "message": f'Привет, {first_name}', "random_id": random.randint(1, 2147483647)})
             else:
                 vk.method("messages.send", {"peer_id": id, "message": f'Главная новость: {newss}', "random_id": random.randint(1, 2147483647)})
-            print(name[0]['first_name'])
             # elif body.lower() == "Пока":
             #     vk.method("messages.send", {"peer_id": id, "message": "Доброго дня!", "random_id": random.randint(1, 2147483647)})
             # else:
